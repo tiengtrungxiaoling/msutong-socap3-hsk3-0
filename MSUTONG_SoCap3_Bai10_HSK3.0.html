@@ -242,11 +242,11 @@ const BUILD={order:buildOrder,passage:buildPassage,essay:buildEssay,position:bui
 document.title='Bài '+N+' · '+E.zh+' · '+E.total+' câu';
 $('#ltitle').textContent='Bài '+N+' · '+E.zh+' — Bài tập '+E.total+' câu';$('#lsub').textContent=E.sub;
 let stu=store.get('msu3:student');const who=h('span',null);$('#pn').append(who);
-function showWho(){who.innerHTML='';if(stu)who.append('👤 '+stu.name+' · '+stu.cls+' ',h('a',{href:'#',onclick:e=>{e.preventDefault();gate(true)}},'(đổi)'))}
-function gate(force){const ov=h('div',{class:'gate'});const nm=h('input',{type:'text',class:'wide',placeholder:'Họ và tên'}),cl=h('input',{type:'text',class:'wide',placeholder:'Lớp (vd: HSK1-A)'}),cd=h('input',{type:'text',class:'wide',placeholder:'Mã học viên (nếu có)'}),msg=h('div',{class:'ans',style:'color:var(--bad)'});
-  if(stu&&force){nm.value=stu.name;cl.value=stu.cls;cd.value=stu.code||''}
-  ov.append(h('div',{class:'card gbox'},h('h2',null,'Xiao Ling Tiếng Trung'),h('p',null,'Nhập thông tin để làm bài và gửi bảng điểm cho cô.'),h('p',null,nm),h('p',null,cl),h('p',null,cd),msg,h('p',null,h('button',{class:'b',onclick:()=>{if(!nm.value.trim()||!cl.value.trim()){msg.textContent='Cần nhập họ tên và lớp.';return}stu={name:nm.value.trim(),cls:cl.value.trim(),code:cd.value.trim()};store.set('msu3:student',stu);ov.remove();showWho()}},'Bắt đầu làm bài'))));document.body.append(ov)}
-if(!stu)gate(false);else showWho();
+function showWho(){who.innerHTML='';if(stu)who.append('👤 '+stu.name+' · '+stu.cls+' · GV '+(stu.teacher||'')+' ',h('a',{href:'#',onclick:e=>{e.preventDefault();gate(true)}},'(đổi)'))}
+function gate(force){const ov=h('div',{class:'gate'});const nm=h('input',{type:'text',class:'wide',placeholder:'Họ và tên'}),cl=h('input',{type:'text',class:'wide',placeholder:'Lớp (vd: HSK1-A)'}),tc=h('input',{type:'text',class:'wide',placeholder:'Tên giáo viên'}),cd=h('input',{type:'text',class:'wide',placeholder:'Mã học viên (nếu có)'}),msg=h('div',{class:'ans',style:'color:var(--bad)'});
+  if(stu&&force){nm.value=stu.name;cl.value=stu.cls;tc.value=stu.teacher||'';cd.value=stu.code||''}
+  ov.append(h('div',{class:'card gbox'},h('h2',null,'Xiao Ling Tiếng Trung'),h('p',null,'Nhập thông tin để làm bài và gửi bảng điểm cho cô.'),h('p',null,nm),h('p',null,cl),h('p',null,tc),h('p',null,cd),msg,h('p',null,h('button',{class:'b',onclick:()=>{if(!nm.value.trim()||!cl.value.trim()||!tc.value.trim()){msg.textContent='Cần nhập họ tên, lớp và tên giáo viên.';return}stu={name:nm.value.trim(),cls:cl.value.trim(),teacher:tc.value.trim(),code:cd.value.trim()};store.set('msu3:student',stu);ov.remove();showWho()}},'Bắt đầu làm bài'))));document.body.append(ov)}
+if(!stu||!stu.teacher)gate(!!stu);else showWho();
 const tb=$('#tabs'),panels={};const LSEQ=[];
 E.tabs.forEach(t=>{const p=h('div',{id:'p-'+t.id,hidden:true});panels[t.id]=p;$('#panels').append(p);tb.append(h('button',{'data-k':t.id,type:'button',onclick:()=>show(t.id)},t.label))});
 $('#tabs').before(h('div',{class:'card legend'},h('p',null,h('b',null,'Cấu trúc: '),E.legend),
@@ -276,7 +276,7 @@ function show(k){for(const x in panels)panels[x].hidden=x!==k;$$('button',tb).fo
 const hs=(location.hash||'').slice(1);show(hs in panels?hs:'nghe');
 Q.forEach(q=>{if(saved[q.id]!==undefined&&q.set)q.set(saved[q.id])});
 /* ---------- nộp bài ---------- */
-const FORM={formId:"1FAIpQLScW42keXthelT3_x1V-32hgCMF277tMuylpE6rI5s2JjILJRw",entry:{name:"entry.826298956",cls:"entry.323826547",code:"entry.596832734",book:"entry.1396790582",lesson:"entry.101841915",total:"entry.1681515543",percent:"entry.1150777445",minutes:"entry.1827265816",doneAt:"entry.74347641",listenVoc:"entry.1359051659",listenSen:"entry.545060432",fill:"entry.145502130",order:"entry.904100066",gram:"entry.54056752",gramMc:"entry.1508878339",translate:"entry.567811258",reading:"entry.117364272",flash:"entry.672370602",hanzi:"entry.1919782312",xp:"entry.682208053",hard:"entry.565036598",note:"entry.895573991"}};
+const FORM={formId:"1FAIpQLSfTycYNX35sXpG6MfUcZN3qGB3oiKah7JZpye92I92tydKEfg",entry:{name:"entry.826298956",cls:"entry.323826547",teacher:"entry.1654320363",code:"entry.596832734",book:"entry.1396790582",lesson:"entry.101841915",total:"entry.1681515543",percent:"entry.1150777445",minutes:"entry.1827265816",doneAt:"entry.74347641",listenVoc:"entry.1359051659",listenSen:"entry.545060432",fill:"entry.145502130",order:"entry.904100066",gram:"entry.54056752",gramMc:"entry.1508878339",translate:"entry.567811258",reading:"entry.117364272",flash:"entry.672370602",hanzi:"entry.1919782312",xp:"entry.682208053",hard:"entry.565036598",note:"entry.895573991"}};
 const GROUP0={l1:'listenVoc',l2:'listenSen',l4:'listenSen',rf:'fill',rm:'reading',rt:'reading',tr:'translate',od:'order'};
 const gk=id=>GROUP0[id]||(id.startsWith('sb_mcq')?'reading':null);
 function sendToForm(p){let sink=$('#gf-sink');if(!sink){sink=h('iframe',{id:'gf-sink',name:'gf-sink',style:'display:none'});document.body.append(sink)}
@@ -299,13 +299,13 @@ function card(g,sub,payload){let old=$('#scorecard');if(old)old.remove();const s
     h('div',{class:'btns'},h('button',{class:'b',type:'button',onclick:()=>{sendToForm(payload);status.textContent='Đã gửi lại lúc '+new Date().toLocaleTimeString('vi-VN')+' (trình duyệt không xác nhận được).'}},'Gửi lại cho cô'),h('button',{class:'b sec2',type:'button',onclick:()=>window.print()},'In / lưu PDF'),
       h('button',{class:'b sec2',type:'button',onclick:()=>{if(confirm('Làm lại bài này? Bài làm và điểm hiện tại sẽ bị xóa trên máy này.')){store.keys(PFX).forEach(store.del);store.del(SUBK);store.del(STK);location.reload()}}},'Làm lại bài'),status));
   $('#panels').before(c);return status}
-function payloadOf(g,sub){const o={name:stu.name,cls:stu.cls,code:stu.code||'',book:'MSUTONG Sơ cấp '+VOL+' · Bài tập 40 câu',lesson:'Bài '+N+' · '+E.zh,total:g.ok+'/'+g.tot,percent:Math.round(g.ok/g.tot*100),minutes:sub.minutes,doneAt:new Date(sub.t).toLocaleString('vi-VN'),hard:sub.hard||'',
+function payloadOf(g,sub){const o={name:stu.name,cls:stu.cls,teacher:stu.teacher||'',code:stu.code||'',book:'MSUTONG Sơ cấp '+VOL+' · Bài tập 40 câu',lesson:'Bài '+N+' · '+E.zh,total:g.ok+'/'+g.tot,percent:Math.round(g.ok/g.tot*100),minutes:sub.minutes,doneAt:new Date(sub.t).toLocaleString('vi-VN'),hard:sub.hard||'',
     note:(sub.note?sub.note+' | ':'')+'Chi tiết: '+E.parts.filter(p=>g.parts[p.id]).map(p=>p.id+' '+g.parts[p.id].ok+'/'+g.parts[p.id].tot).join('; ')+ESSAY()};
   const grp={};E.parts.forEach(p=>{const k=gk(p.id);if(!k||!g.parts[p.id])return;grp[k]=grp[k]||{ok:0,tot:0};grp[k].ok+=g.parts[p.id].ok;grp[k].tot+=g.parts[p.id].tot});for(const k in grp)o[k]=grp[k].ok+'/'+grp[k].tot;return o}
 function finalize(sub,send){const g=grade();const p=payloadOf(g,sub);sbar.remove();const st=card(g,sub,p);if(send){sendToForm(p);st.textContent='Đã gửi bảng điểm cho cô lúc '+new Date().toLocaleTimeString('vi-VN')+' (cần có mạng; trình duyệt không xác nhận được).'}window.scrollTo({top:0,behavior:'smooth'})}
 function submit(){warn.textContent='';const miss=Q.filter(q=>!filled(q));
   if(miss.length){const ps=[...new Set(miss.map(q=>E.parts.find(p=>p.id===q.part).tab))];warn.textContent='Còn '+miss.length+' câu chưa làm — phần: '+ps.join(', ')+'.';const f=miss[0];show(E.parts.find(p=>p.id===f.part).tabId);f.row.scrollIntoView({behavior:'smooth',block:'center'});return}
-  if(!stu){gate(false);return}const st=store.get(STK);const sub={t:Date.now(),minutes:Math.max(1,Math.round((Date.now()-(st?st.t:Date.now()))/60000)),hard:hard.value.trim(),note:note.value.trim()};store.set(SUBK,sub);submitted=sub;cancelTok++;finalize(sub,true)}
+  if(!stu||!stu.teacher){gate(!!stu);return}const st=store.get(STK);const sub={t:Date.now(),minutes:Math.max(1,Math.round((Date.now()-(st?st.t:Date.now()))/60000)),hard:hard.value.trim(),note:note.value.trim()};store.set(SUBK,sub);submitted=sub;cancelTok++;finalize(sub,true)}
 if(submitted)finalize(submitted,false);else refresh();
 })();
 </script></body></html>
